@@ -18,7 +18,10 @@ export class News extends Component {
     let data = await fetch(url);
     let parsedData = await data.json()
     console.log(parsedData);
-    this.setState({ articles: parsedData.articles })
+    this.setState({
+      articles: parsedData.articles,
+      totalResults: parsedData.totalResults
+    })
   }
 
   handlePrevClick = async () => {
@@ -27,25 +30,25 @@ export class News extends Component {
     let parsedData = await data.json()
     console.log(parsedData);
     this.setState({
-      page: this.state.page - 1 ,
+      page: this.state.page - 1,
       articles: parsedData.articles
     }
     )
   }
 
-  handleNextClick = async ()=>{
-    console.log("Next"); 
+  handleNextClick = async () => {
+    console.log("Next");
     {
-        let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=917c9951691f4713b97d7cea7591d650&page=${this.state.page + 1}&pageSize=12`;
-        let data = await fetch(url);
-        let parsedData = await data.json()
-        console.log(parsedData);  
-        this.setState({
-            page: this.state.page + 1,
-            articles: parsedData.articles
-        })
-}
-}
+      let url = `https://newsapi.org/v2/top-headlines?country=in&apiKey=917c9951691f4713b97d7cea7591d650&page=${this.state.page + 1}&pageSize=12`;
+      let data = await fetch(url);
+      let parsedData = await data.json()
+      console.log(parsedData);
+      this.setState({
+        page: this.state.page + 1,
+        articles: parsedData.articles
+      })
+    }
+  }
 
   render() {
     return (
@@ -59,7 +62,7 @@ export class News extends Component {
           })}
         </div>
         <button disabled={this.state.page <= 1} className="btn btn-dark m-3" onClick={this.handlePrevClick}>Prev</button>
-        <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults/12)} className="btn btn-dark m-3" onClick={this.handleNextClick}>Next</button>
+        <button disabled={this.state.page + 1 > Math.ceil(this.state.totalResults / 12)} className="btn btn-dark m-3" onClick={this.handleNextClick}>Next</button>
       </div>
     )
   }
